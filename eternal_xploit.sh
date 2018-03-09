@@ -1,6 +1,7 @@
+wine32=/usr/lib/wine/wine
 if [ -e /usr/share/metasploit-framework/modules/exploits/windows/smb/eternalblue_doublepulsar.rb ] && [ -d /usr/share/metasploit-framework/modules/exploits/windows/smb/deps/ ]
 then
-if  [ "$(dpkg --print-architecture)" = "amd64" ]; then
+  if test -x $wine32; then
 cat << "EOF"
 
            #######################################################
@@ -224,6 +225,7 @@ dpkg --add-architecture i386 && apt-get update && apt-get install wine32
 apt-get install metasploit-framework
 clear
 clear
+./eternal_xploit.sh
 fi
 else
 cp -r deps/ /usr/share/metasploit-framework/modules/exploits/windows/smb/
