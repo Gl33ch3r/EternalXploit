@@ -68,7 +68,7 @@ dpkg --add-architecture i386 && apt-get update && apt-get install wine32
 apt-get install metasploit-framework
 clear
 clear
-./eternal_xploit.sh
+./EternalXploit.sh
 }
 # Check masscan
 which masscan > /dev/null 2>&1
@@ -86,7 +86,7 @@ echo 'exit' >> config.rc
 msfconsole -q -r config.rc
 /etc/init.d/postgresql stop
 rm config.rc
-./eternal_xploit.sh
+./EternalXploit.sh
 }
 # Delete temporary files
 delf() {
@@ -219,7 +219,7 @@ msfconsole -q -r config.rc
 /etc/init.d/postgresql stop
 rm config.rc
 clear
-./eternal_xploit.sh
+./EternalXploit.sh
 elif [[ $cmd -eq 2 ]]
 then
 echo
@@ -248,7 +248,7 @@ msfconsole -q config.rc
 /etc/init.d/postgresql stop
 rm config.rc
 clear
-./eternal_xploit.sh
+./EternalXploit.sh
 else
 echo Invalid option...exiting...
 fi
@@ -276,7 +276,7 @@ msfconsole -q -r config.rc
 /etc/init.d/postgresql stop
 rm config.rc
 clear
-./eternal_xploit.sh
+./EternalXploit.sh
 elif [[ $exploit -eq 3 ]]
 then
 clear
@@ -301,7 +301,7 @@ msfconsole -q -r config.rc
 /etc/init.d/postgresql stop
 rm config.rc
 clear
-./eternal_xploit.sh
+./EternalXploit.sh
 elif [[ $exploit -eq 4 ]]
 then
 clear
@@ -324,7 +324,7 @@ echo
 echo -e "$yellow""Nmap MS17-010 result saved to $ms17_010_nmap_path"
 echo
 echo
-./eternal_xploit.sh
+./EternalXploit.sh
 elif [[ $exploit -eq 5 ]]
 then
 mass="$defdir/masscan"
@@ -367,7 +367,7 @@ if [ ! -s "$msfips" ]
 then
 echo
 echo -e "$yellow" "   It was not detected in $iptarget any port 445 opened."
-./eternal_xploit.sh
+./EternalXploit.sh
 fi
 stat="0"
 echo ""
@@ -444,7 +444,7 @@ if [ ! -s "$msfips" ]
 then
 echo
 echo -e "$yellow""     It was not detected in $iptarget any port 445 opened."
-./eternal_xploit.sh
+./EternalXploit.sh
 fi
 stat="0"
 echo ""
@@ -482,11 +482,11 @@ getdata
 elif [[ $exploit -eq 0 ]]
 then
 clear
-./eternal_xploit.sh
+./EternalXploit.sh
 else
 clear
 echo '   Invalid option...'
-./eternal_xploit.sh
+./EternalXploit.sh
 fi
 elif [[ $opts -eq 2 ]] 
 then
@@ -520,7 +520,7 @@ echo -e "$red"'            ###' "$yellow"'               Starting Scan . . .    
 echo -e "$red"'            #######################################################'
 echo -e "$white"
 nmap -T4 -v -Pn -p445 --script smb-vuln-cve-2017-7494 --script-args smb-vuln-cve-2017-7494.check-version $iptarget
-./eternal_xploit.sh
+./EternalXploit.sh
 elif [[ $exploit -eq 1 ]]
 then
 clear
@@ -547,11 +547,11 @@ msfconsole -q -r config.rc
 /etc/init.d/postgresql stop
 rm config.rc
 clear
-./eternal_xploit.sh
+./EternalXploit.sh
 elif [[ $exploit -eq 0 ]]
 then
 clear
-./eternal_xploit.sh
+./EternalXploit.sh
 fi
 elif [[ $opts -eq 0 ]] 
 then
@@ -565,4 +565,3 @@ fi
 else
 checkfile
 fi
-
