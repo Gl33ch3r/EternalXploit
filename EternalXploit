@@ -81,10 +81,6 @@ delf
 else
 if [ ! -f "$defdir/$vulnos" ]
 then
-echo "Vulnerable Ips to Eternal Blue exploit (MS17-010) - Scanned by Eternal Scanner" > $defdir/$vulnos
-echo "------------------------------------------------------------------------------" >> $defdir/$vulnos
-echo "             Detailed Vulnerable IP & Operating System File                   " >> $defdir/$vulnos
-echo "+----------------------------------------------------------------------------+" >> $defdir/$vulnos
 echo "$vuln2" >> "$defdir/$vulnostmp"
 awk '!a[$0]++' $defdir/$vulnostmp > $defdir/$vulnos 2>&1
 rm -f $defdir/$vulnostmp >/dev/null 2>&1
@@ -118,10 +114,6 @@ delf
 else
 if [ ! -f "$defdir/$vuln2os" ]
 then
-echo "Vulnerable Ips to Eternal Blue exploit (MS17-010) - Scanned by Eternal Scanner" > $defdir/$vulnos
-echo "------------------------------------------------------------------------------" >> $defdir/$vulnos
-echo "             Detailed Vulnerable IP & Operating System File                   " >> $defdir/$vulnos
-echo "+----------------------------------------------------------------------------+" >> $defdir/$vulnos
 echo "$vuln2" >> "$defdir/$vulnostmp"
 awk '!a[$0]++' $defdir/$vulnostmp > $defdir/$vuln2os 2>&1
 rm -f $defdir/$vulnostmp >/dev/null 2>&1
