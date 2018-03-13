@@ -1,12 +1,13 @@
 # EternalXploit
 Compilation of MS17-010 and Samba Exploit
 
-
 To install:
 
-git clone https://github.com/Gl33ch3r/EternalXploit.git
+1. git clone https://github.com/Gl33ch3r/EternalXploit.git
 
-cd EternalXploit/
+2. cd EternalXploit/
 
-./EternalXploit.sh
+3. chmod +x EternalXploit
+
+4. ./EternalXploit
 
