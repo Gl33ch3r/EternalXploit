@@ -9,6 +9,7 @@ yellow='\033[0;33m'       # Yellow
 blue='\033[0;34m'         # Blue
 green='\033[0;32m'        # Green
 wine32=/usr/lib/wine/wine
+masscan=/usr/lib/masscan
 version="1.0"
 
 logo() {
@@ -57,18 +58,15 @@ if [ $fls == "1" ]
 then
 echo
 echo -e "$green" "Your EternalXploit Data Files were moved to :"
-echo
 echo -e "$yellow" "$defdir"
-echo -e ""
 echo -e "$yellow" "Press ENTER key To Continue"
 read -r cont
 yes | cp -rf EternalXploit /usr/local/sbin/ >/dev/null 2>&1
+yes | cp -rf EternalXploit.desktop /usr/share/applications/ >/dev/null 2>&1
 echo "install" >> "$defdir/$install"
-echo ""
+echo
 echo -e "$green" "EternalXploit was installed in your system"
-echo ""
 echo -e "$yellow" "Write (EternalXploit) anywhere to run it."
-echo ""
 echo -e "$yellow" "Press ENTER key To Continue"
 read -r cont
 fi
@@ -140,54 +138,81 @@ fi
 rm -f "$defdir/$msflogs" >/dev/null 2>&1
 lm=$(cat $defdir/$vuln2os | wc -l)
 echo ""
-echo -e "$orange""*****************************************************"
-echo -e "$orange""*************$cyan Eternal Romance Results$orange ***************"
+echo -e "$green""*****************************************************"
+echo -e "$green""*************$cyan Eternal Romance Results$green ***************"
 # Display the positive results
 cat "$defdir/$vuln2os" | sed -e "s/:445//g"
-echo -e "$orange""*****************************************************"
+echo -e "$green""*****************************************************"
 echo
-echo -e "$yellow" "EternalXploit saved the vulnerable ips to $defdir/$vulnos"
+echo -e "$yellow" "EternalXploit saved the vulnerable ips to $defdir/$vuln2os"
 echo
 fi
 }
 
-# Check Dependency 
-checkdep(){
+
+
+checkdep() {
+which msfconsole > /dev/null 2>&1
+if [ "$?" -eq "1" ]; then
 echo -e "GET http://google.com HTTP/1.0\n\n" | nc google.com 80 > /dev/null 2>&1
 if [ $? -ne 0 ]; then
-echo -e "$yellow" "Opps , not connected to Internet"
+echo
+echo -e "$red"'            #######################################################'
+echo -e "$red"'            ###' "$yellow"'         Opps , not connected to Internet      '"$red"  '###'
+echo -e "$red"'            #######################################################'
+echo
 exit 1
 fi
-echo
-echo -e "$red"'            #######################################################'
-echo -e "$red"'            ###' "$yellow"'            Checking dependencies . . .        '"$red"  '###'
-echo -e "$red"'            #######################################################'
-echo
-apt-get install masscan -y
-dpkg --add-architecture i386 && apt-get update && apt-get install wine32 -y
-mkdir -p /root/.wine/drive_c/
+   echo -e "$red""Metasploit Framework Missing"
+echo ""
 apt-get install metasploit-framework
-clear
-clear
-EternalXploit
-}
-
-# Check masscan
+exit 1
+fi  
 which masscan > /dev/null 2>&1
 if [ "$?" -eq "1" ]; then
-checkdep
+echo -e "$red""Masscan Missing"
+echo ""
+echo -e "GET http://google.com HTTP/1.0\n\n" | nc google.com 80 > /dev/null 2>&1
+if [ $? -ne 0 ]; then
+echo
+echo -e "$red"'            #######################################################'
+echo -e "$red"'            ###' "$yellow"'         Opps , not connected to Internet      '"$red"  '###'
+echo -e "$red"'            #######################################################'
+echo
+exit 1
 fi
+apt-get install masscan -y
+exit 1
+fi 
+if ( ! test -x $wine32 )
+then
+echo -e "$red""Wine Missing"
+echo ""
+echo -e "GET http://google.com HTTP/1.0\n\n" | nc google.com 80 > /dev/null 2>&1
+if [ $? -ne 0 ]; then
+echo
+echo -e "$red"'            #######################################################'
+echo -e "$red"'            ###' "$yellow"'         Opps , not connected to Internet      '"$red"  '###'
+echo -e "$red"'            #######################################################'
+echo
+exit 1
+fi
+dpkg --add-architecture i386 && apt-get update && apt-get install wine32 -y
+mkdir -p /root/.wine/drive_c/
+exit 1
+fi 
+}
 
 # Check Files and Directory 
 checkfile(){
 cp -r deps/ $dir/
 cp -r eternalblue_doublepulsar.rb $dir/
-touch config.rc
-echo reload_all >> config.rc
+touch config.rc 
+echo reload_all > config.rc > /dev/null 2>&1
 echo 'exit' >> config.rc
-/etc/init.d/postgresql start
+/etc/init.d/postgresql start > /dev/null 2>&1
 msfconsole -q -r config.rc
-/etc/init.d/postgresql stop
+/etc/init.d/postgresql stop > /dev/null 2>&1
 rm config.rc
 EternalXploit
 }
@@ -480,12 +505,12 @@ exit 1
 fi
 stat="0"
 echo ""
-echo -e "$red" "           Checking ips :"
-echo -e "$yellow""     ----------------------------"
+echo -e "$red" "      Checking ips :"
+echo -e "$yellow""----------------------------"
 echo -e "$green" ""
-echo "            ""$(cat $defdir/msfip)"
+echo "$(cat $defdir/msfip)"
 echo ""
-echo -e "$yellow""     ----------------------------"
+echo -e "$yellow""----------------------------"
 lc=$(cat $defdir/msfip | wc -l)
 echo "     Collected $lc ips"
 echo -e "$yellow""     Checking if the $lc ips are vulnerable"
@@ -568,12 +593,12 @@ fi
 stat="0"
 echo ""
 echo ""
-echo -e "$red" "           Checking ips :"
-echo -e "$yellow""     ----------------------------"
+echo -e "$red" "       Checking ips :"
+echo -e "$yellow""----------------------------"
 echo -e "$green" ""
-echo "            ""$(cat $defdir/msfip)"
+echo "$(cat $defdir/msfip)"
 echo ""
-echo -e "$yellow""     ----------------------------"
+echo -e "$yellow""----------------------------"
 lc=$(cat $defdir/msfip | wc -l)
 echo "     Collected $lc ips"
 echo -e "$yellow""     Checking if the $lc ips are vulnerable"
@@ -613,11 +638,14 @@ then
 echo -e "$red""*** "$yellow"Warning EternalXploit will be uninstalled "$red"***"
 echo -e "$yellow" "Press ENTER key To Continue"
 read -r cont
+rm -f /usr/share/applications/EternalXploit.desktop >/dev/null 2>&1
 rm -f /usr/local/sbin/EternalXploit >/dev/null 2>&1
 rm -f "$defdir/$install"
 exit 1
 elif [ "$1" == "--help" ]
 then
+echo
+logo
 echo
 echo -e "$red"'            ################### '"$green"'EternalXploit'"$yellow" $version"$red"' ##################'
 echo -e "$green""                  (https://github.com/Gl33ch3r/EternalXploit)"
@@ -625,7 +653,7 @@ echo -e "$red""            -----------------------------------------------------
 echo -e "$white"
 echo "Available Shortcuts :"
 echo ""
-echo "EternalXploit --eb 192.168.1.1/24 (EternalBlue Vulnerability Scanner"
+echo "EternalXploit --eb 192.168.1.1/24 (EternalBlue Vulnerability Scanner)"
 echo "EternalXploit --er 192.168.1.1/24 (EternalRomance Vulnerability Scanner)"
 echo "EternalXploit --help (Display available shortcuts)"
 echo "EternalXploit --version (Display current version)"
@@ -671,8 +699,7 @@ fi
 
 if [ -e $dir/eternalblue_doublepulsar.rb ] && [ -d $dir/deps/ ]
 then
-if test -x $wine32; 
-then
+checkdep
 logo
 echo
 echo -e "$red"'            **********************'"$yellow"' Exploits '"$red"'***********************'
@@ -890,10 +917,6 @@ elif [[ $opts -eq 0 ]]
 then
 clear
 exit
-fi
-else
-logo
-checkdep
 fi
 else
 checkfile
