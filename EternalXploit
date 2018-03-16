@@ -19,7 +19,7 @@ echo -e "$red"'            ###' "$green"'     Naval Intelligence and Security Fo
 echo -e "$red"'            ###' "$green"'     ********** Philippine Navy **********     '"$red"  '###'
 echo -e "$red"'            ###' "$green"' Vulnerability Assesstment Penetration Testing '"$red"  '###'
 echo -e "$red"'            #######################################################'
-echo -e "$red"'                    COd3d By:'"$green"' Gl33ch3r     '"$green"'Version: ' "$yellow"'1.0'
+echo -e "$red"'                    COd3d By:'"$green"' Gl33ch3r     '"$green"'Version: ' "$yellow"$version
 echo -e "$white"
 }
 
@@ -69,6 +69,8 @@ echo -e "$green" "EternalXploit was installed in your system"
 echo -e "$yellow" "Write (EternalXploit) anywhere to run it."
 echo -e "$yellow" "Press ENTER key To Continue"
 read -r cont
+EternalXploit --help
+exit 1
 fi
 
 
@@ -683,9 +685,10 @@ echo -e "$red""            -----------------------------------------------------
 echo -e "$white"
 echo "Available Shortcuts :"
 echo ""
-echo "EternalXploit --eb 192.168.1.1/24 (EternalBlue Vulnerability Scanner)"
+echo -e "$green""EternalXploit --eb 192.168.1.1/24 (EternalBlue Vulnerability Scanner)"
 echo "EternalXploit --er 192.168.1.1/24 (EternalRomance Vulnerability Scanner)"
 echo "EternalXploit --help (Display available shortcuts)"
+echo "EternalXploit --update (Update repo from github)"
 echo "EternalXploit --version (Display current version)"
 echo ""
 echo -e "$yellow""Example :""$green"" EternalXploit --eb 192.168.1.1/24"
@@ -739,6 +742,7 @@ echo -e '     '"$red"'['"$yellow"'1'"$red"']'"$white"' MS17-010 Exploit'
 echo -e '     '"$red"'['"$yellow"'2'"$red"']'"$white"' Samba Exploit'
 echo
 echo -e '     '"$red"'['"$yellow"'0'"$red"']'"$red"' Exit'
+echo
 echo -e "$green"
 read -p '     Please select exploit: ' opts
 if [[ $opts -eq 1 ]] 
@@ -746,7 +750,8 @@ then
 clear
 logo
 echo -e "$white"
-echo '     Enternal Exploits/Scanner'
+echo -e "$red"'            **************'"$yellow"' Enternal Exploits/Scanner '"$red"'**************'
+echo
 echo
 echo -e '     '"$red"'['"$yellow"'1'"$red"']'"$white"'   Eternalblue Doublepulsar Exploit'
 echo -e '     '"$red"'['"$yellow"'2'"$red"']'"$white"'   EternalBlue SMB Remote Windows Kernel Pool Corruption Exploit'
@@ -756,6 +761,7 @@ echo -e '     '"$red"'['"$yellow"'5'"$red"']'"$white"'   MS17-010 Eternalblue Sc
 echo -e '     '"$red"'['"$yellow"'6'"$red"']'"$white"'   EternalRomance/Synergy/Champion Remote Code Execution Scanner'
 echo
 echo -e '     '"$red"'['"$yellow"'0'"$red"']'"$red"'   Back'
+echo
 echo -e "$green"
 read -p '     Please select exploit: ' exploit
 if [[ $exploit -eq 1 ]]
@@ -853,14 +859,15 @@ then
 clear
 logo
 echo -e "$white"
-echo '     Samba Exploit'
+echo -e "$red"'            ********************'"$yellow"' Samba Exploit '"$red"'********************'
 echo
-echo -e '     '"$red"'['"$white"'1'"$red"']'"$white"' Samba exploit'
-echo -e '     '"$red"'['"$white"'2'"$red"']'"$white"' Nmap samba scanner'
 echo
-echo -e '     '"$red"'['"$white"'0'"$red"']'"$white"' Back'
+echo -e '     '"$red"'['"$yellow"'1'"$red"']'"$white"' Samba exploit'
+echo -e '     '"$red"'['"$yellow"'2'"$red"']'"$white"' Nmap samba scanner'
 echo
-echo -e "$yellow"
+echo -e '     '"$red"'['"$yellow"'0'"$red"']'"$red"' Back'
+echo
+echo -e "$green"
 read -p '     Please select exploit: ' exploit
 if [[ $exploit -eq 2 ]]
 then
