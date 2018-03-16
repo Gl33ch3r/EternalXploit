@@ -627,8 +627,35 @@ getdata2
 
 }
 
+# Updates EternalXploit
+updates(){
+echo -e "GET http://google.com HTTP/1.0\n\n" | nc google.com 80 > /dev/null 2>&1
+if [ $? -ne 0 ]; then
+echo -e "$yellow" "Opps , not connected to Internet"
+exit 1
+fi
+rm -f $defdir/version.txt >/dev/null 2>&1
+which wget > /dev/null 2>&1
+      if [ "$?" -eq "1" ]; then
+apt-get install wget -y > /dev/null 2>&1
+fi
+wget https://raw.githubusercontent.com/Gl33ch3r/EternalXploit/master/version.txt -O $defdir/version.txt > /dev/null 2>&1
+v=$(cat $defdir/version.txt)
+if [ $version == $v ]
+then
+echo -e "$green""EternalXploit is up to date!"
+exit 1
+else
+rm -f /usr/local/sbin/EternalXploit >/dev/null 2>&1
+wget https://raw.githubusercontent.com/Gl33ch3r/EternalXploit/master/EternalXploit -O /usr/local/sbin/EternalXploit > /dev/null 2>&1
+chmod +x /usr/local/sbin/EternalXploit >/dev/null 2>&1
+echo ""
+echo -e "$green""EternalXploit Binaries where updated to your system"
+echo ""
+exit 1
+fi
+}
 # Shortcuts
-
 if [ "$1" == "--version" ]
 then
 echo -e "$yellow""version $version"
@@ -642,6 +669,9 @@ rm -f /usr/share/applications/EternalXploit.desktop >/dev/null 2>&1
 rm -f /usr/local/sbin/EternalXploit >/dev/null 2>&1
 rm -f "$defdir/$install"
 exit 1
+elif [ "$1" == "--update" ]
+then
+updates
 elif [ "$1" == "--help" ]
 then
 echo
