@@ -10,7 +10,7 @@ blue='\033[0;34m'         # Blue
 green='\033[0;32m'        # Green
 wine32=/usr/lib/wine/wine
 masscan=/usr/lib/masscan
-version="1.0"
+version="1.1"
 
 logo() {
 echo
