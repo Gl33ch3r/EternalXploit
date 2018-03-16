@@ -16,5 +16,7 @@ Compilation of MS17-010 and Samba Exploit
  
  EternalXploit --help (Display available shortcuts)
  
+ EternalXploit --update (Update repo from github)
+ 
  EternalXploit --version (Display current version) 
 
