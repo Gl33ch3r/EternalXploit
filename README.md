@@ -10,8 +10,8 @@ Compilation of MS17-010 and Samba Exploit
 
 # Usage
 
-EternalXploit --eb 192.168.1.1/24 (EternalBlue Vulnerability Scanner)
-EternalXploit --er 192.168.1.1/24 (EternalRomance Vulnerability Scanner)
-EternalXploit --help (Display available shortcuts)
-EternalXploit --version (Display current version)
+ EternalXploit --eb 192.168.1.1/24 (EternalBlue Vulnerability Scanner)
+ EternalXploit --er 192.168.1.1/24 (EternalRomance Vulnerability Scanner)
+ EternalXploit --help (Display available shortcuts)
+ EternalXploit --version (Display current version)
 
