@@ -683,7 +683,7 @@ echo -e "$red"'            ################### '"$green"'EternalXploit'"$yellow"
 echo -e "$green""                  (https://github.com/Gl33ch3r/EternalXploit)"
 echo -e "$red""            --------------------------------------------------------"
 echo -e "$white"
-echo -e "$green""                         *** Available Shortcuts ***"
+echo -e "$green""                         **** Available Shortcuts ****            "
 echo ""
 echo -e "$green""EternalXploit --eb 192.168.1.1/24 (EternalBlue Vulnerability Scanner)"
 echo "EternalXploit --er 192.168.1.1/24 (EternalRomance Vulnerability Scanner)"
@@ -738,8 +738,8 @@ echo
 echo -e "$red"'            **********************'"$yellow"' Exploits '"$red"'***********************'
 echo
 echo
-echo -e '     '"$red"'['"$yellow"'1'"$red"']'"$white"' MS17-010 Exploit'
-echo -e '     '"$red"'['"$yellow"'2'"$red"']'"$white"' Samba Exploit'
+echo -e '     '"$red"'['"$yellow"'1'"$red"']'"$green"' MS17-010 Exploit'
+echo -e '     '"$red"'['"$yellow"'2'"$red"']'"$green"' Samba Exploit'
 echo
 echo -e '     '"$red"'['"$yellow"'0'"$red"']'"$red"' Exit'
 echo
@@ -753,12 +753,12 @@ echo -e "$white"
 echo -e "$red"'            **************'"$yellow"' Enternal Exploits/Scanner '"$red"'**************'
 echo
 echo
-echo -e '     '"$red"'['"$yellow"'1'"$red"']'"$white"'   Eternalblue Doublepulsar Exploit'
-echo -e '     '"$red"'['"$yellow"'2'"$red"']'"$white"'   EternalBlue SMB Remote Windows Kernel Pool Corruption Exploit'
-echo -e '     '"$red"'['"$yellow"'3'"$red"']'"$white"'   EternalRomance/Synergy/Champion Remote Code Execution Exploit'
-echo -e '     '"$red"'['"$yellow"'4'"$red"']'"$white"'   Nmap MS17-010 Eternalblue Scanner'
-echo -e '     '"$red"'['"$yellow"'5'"$red"']'"$white"'   MS17-010 Eternalblue Scanner'
-echo -e '     '"$red"'['"$yellow"'6'"$red"']'"$white"'   EternalRomance/Synergy/Champion Remote Code Execution Scanner'
+echo -e '     '"$red"'['"$yellow"'1'"$red"']'"$green"'   Eternalblue Doublepulsar Exploit'
+echo -e '     '"$red"'['"$yellow"'2'"$red"']'"$green"'   EternalBlue SMB Remote Windows Kernel Pool Corruption Exploit'
+echo -e '     '"$red"'['"$yellow"'3'"$red"']'"$green"'   EternalRomance/Synergy/Champion Remote Code Execution Exploit'
+echo -e '     '"$red"'['"$yellow"'4'"$red"']'"$green"'   Nmap MS17-010 Eternalblue Scanner'
+echo -e '     '"$red"'['"$yellow"'5'"$red"']'"$green"'   MS17-010 Eternalblue Scanner'
+echo -e '     '"$red"'['"$yellow"'6'"$red"']'"$green"'   EternalRomance/Synergy/Champion Remote Code Execution Scanner'
 echo
 echo -e '     '"$red"'['"$yellow"'0'"$red"']'"$red"'   Back'
 echo
@@ -862,8 +862,8 @@ echo -e "$white"
 echo -e "$red"'            ********************'"$yellow"' Samba Exploit '"$red"'********************'
 echo
 echo
-echo -e '     '"$red"'['"$yellow"'1'"$red"']'"$white"' Samba exploit'
-echo -e '     '"$red"'['"$yellow"'2'"$red"']'"$white"' Nmap samba scanner'
+echo -e '     '"$red"'['"$yellow"'1'"$red"']'"$green"' Samba exploit'
+echo -e '     '"$red"'['"$yellow"'2'"$red"']'"$green"' Nmap samba scanner'
 echo
 echo -e '     '"$red"'['"$yellow"'0'"$red"']'"$red"' Back'
 echo
