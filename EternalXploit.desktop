@@ -2,7 +2,7 @@
 Name=EternalXploit
 Encoding=UTF-8
 Exec=sh -c "EternalXploit;${SHELL:-bash}"
-Icon=kali-menu.png
+Icon=/root/EternalXploit/eternalicon.png
 StartupNotify=false
 Terminal=true
 Type=Application
