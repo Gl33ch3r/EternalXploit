@@ -45,6 +45,7 @@ vulnos="vulnos.txt"
 vuln2os="vuln2os.txt"
 vulnostmp="vulnostmp.txt"
 nmap_path="MS17_010_nmap.txt"
+nmap_path_all="all_vuln_nmap.txt"
 install="install.txt"
 config="$defdir/config.rc"
 
@@ -234,6 +235,7 @@ rm -f "$defdir/pid.tmp" >/dev/null 2>&1
 rm -f "$defdir/x$i" >/dev/null 2>&1
 rm -f "$defdir/$vulnertmp" >/dev/null 2>&1
 rm -f "$defdir/stat" >/dev/null 2>&1
+rm -f "$defdir/all_vuln_nmap.txt" >/dev/null 2>&1
 }
 
 # Eternalblue Doublepulsar Exploit
@@ -804,13 +806,54 @@ echo
 echo
 echo -e '     '"$red"'['"$yellow"'1'"$red"']'"$green"' MS17-010 Exploit'
 echo -e '     '"$red"'['"$yellow"'2'"$red"']'"$green"' Samba Exploit'
+echo -e '     '"$red"'['"$yellow"'3'"$red"']'"$green"' Nmap Vuln Scanner'
 echo
 echo -e '     '"$red"'['"$yellow"'9'"$red"']'"$yellow"' Check Updates'
 echo -e '     '"$red"'['"$yellow"'0'"$red"']'"$red"' Exit'
 echo
 echo -e "$green"
 read -p '     Please select exploit: ' opts
-if [[ $opts -eq 9 ]] 
+if [[ $opts -eq 3 ]] 
+then
+clear
+logo
+echo
+echo -e "$red"'     ************************* '"$yellow"'Nmap Vuln Scanner'"$red"' **********************'
+echo
+echo
+echo -e "$yellow"'     Ex: '"$green"'192.168.1.1'
+echo -e "$yellow"'         '"$green"'192.168.1.1/24'
+echo -e "$white"
+read -p '     IP/IP Range: ' iptarget
+
+if [[ -z "$iptarget" ]]
+then
+echo ""
+echo -e "$yellow" "     Invalid IP/IP Range"
+exit 1
+fi
+
+#check if user input have any letters
+inv=$(echo "$iptarget" | grep [a-zA-Z] )
+if [[ ! -z "$inv" ]]
+then
+echo ""
+echo -e "$yellow" "     Invalid IP/IP Range" 
+exit 1
+fi
+
+echo
+echo -e "$red"'            #######################################################'
+echo -e "$red"'            ###' "$yellow"'               Starting Scan . . .             '"$red"  '###'
+echo -e "$red"'            #######################################################'
+echo -e "$white"
+nmap -oN $defdir/$nmap_path_all -T4 -v -Pn --script vuln $iptarget
+echo
+echo -e "$yellow""     Nmap MS17-010 result saved to $defdir/$nmap_path_all"
+echo
+echo
+EternalXploit
+elif [[ $opts -eq 9 ]] 
 then
 updates
 EternalXploit
