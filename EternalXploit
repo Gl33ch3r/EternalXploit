@@ -10,7 +10,7 @@ blue='\033[0;34m'         # Blue
 green='\033[0;32m'        # Green
 wine32=/usr/lib/wine/wine
 masscan=/usr/lib/masscan
-version="1.4"
+version="1.5"
 
 logo() {
 echo
@@ -44,8 +44,10 @@ msflogs="msflogs.logs"
 vulnos="vulnos.txt"
 vuln2os="vuln2os.txt"
 vulnostmp="vulnostmp.txt"
-nmap_path="MS17_010_nmap.txt"
-nmap_path_all="all_vuln_nmap.txt"
+nmap_path="ms17_010_nmap.nmap"
+nmaptocsv_result_ms17_010="nmap_ms17_010_result.csv"
+nmap_path_all="all_vuln_nmap.nmap"
+nmaptocsv_result="nmap_result.csv"
 install="install.txt"
 config="$defdir/config.rc"
 
@@ -154,7 +156,58 @@ echo
 fi
 }
 
+check_nmaptocsv(){
 
+which python > /dev/null 2>&1
+      if [ "$?" -eq "1" ]; then
+echo -e "GET http://google.com HTTP/1.0\n\n" | nc google.com 80 > /dev/null 2>&1
+if [ $? -ne 0 ]; then
+echo
+echo -e "$red"'            #######################################################'
+echo -e "$red"'            ###' "$yellow"'         Opps , not connected to Internet      '"$red"  '###'
+echo -e "$red"'            #######################################################'
+echo
+exit 1
+fi
+   echo -e "$red" "Python Missing"
+echo ""
+apt-get install python
+exit 1
+fi 
+
+which pip > /dev/null 2>&1
+      if [ "$?" -eq "1" ]; then
+echo -e "GET http://google.com HTTP/1.0\n\n" | nc google.com 80 > /dev/null 2>&1
+if [ $? -ne 0 ]; then
+echo
+echo -e "$red"'            #######################################################'
+echo -e "$red"'            ###' "$yellow"'         Opps , not connected to Internet      '"$red"  '###'
+echo -e "$red"'            #######################################################'
+echo
+exit 1
+fi
+   echo -e "$red" "Pip Missing"
+echo ""
+apt-get install python-pip
+exit 1
+fi 
+which nmaptocsv > /dev/null 2>&1
+if [ "$?" -eq "1" ]; then
+echo -e "GET http://google.com HTTP/1.0\n\n" | nc google.com 80 > /dev/null 2>&1
+if [ $? -ne 0 ]; then
+echo
+echo -e "$red"'            #######################################################'
+echo -e "$red"'            ###' "$yellow"'         Opps , not connected to Internet      '"$red"  '###'
+echo -e "$red"'            #######################################################'
+echo
+exit 1
+fi
+   echo -e "$red""Nmaptocsv Missing"
+echo ""
+pip install nmaptocsv
+exit 1
+fi  
+}
 
 checkdep() {
 which msfconsole > /dev/null 2>&1
@@ -235,7 +288,6 @@ rm -f "$defdir/pid.tmp" >/dev/null 2>&1
 rm -f "$defdir/x$i" >/dev/null 2>&1
 rm -f "$defdir/$vulnertmp" >/dev/null 2>&1
 rm -f "$defdir/stat" >/dev/null 2>&1
-rm -f "$defdir/all_vuln_nmap.txt" >/dev/null 2>&1
 }
 
 # Eternalblue Doublepulsar Exploit
@@ -793,30 +845,10 @@ exit 1
 fi
 fi
 
-
-
-main(){
-if [ -e $dir/eternalblue_doublepulsar.rb ] && [ -d $dir/deps/ ]
-then
-checkdep
-logo
-echo
-echo -e "$red"'            **********************'"$yellow"' Exploits '"$red"'***********************'
-echo
-echo
-echo -e '     '"$red"'['"$yellow"'1'"$red"']'"$green"' MS17-010 Exploit'
-echo -e '     '"$red"'['"$yellow"'2'"$red"']'"$green"' Samba Exploit'
-echo -e '     '"$red"'['"$yellow"'3'"$red"']'"$green"' Nmap Vuln Scanner'
-echo
-echo -e '     '"$red"'['"$yellow"'9'"$red"']'"$yellow"' Check Updates'
-echo -e '     '"$red"'['"$yellow"'0'"$red"']'"$red"' Exit'
-echo
-echo -e "$green"
-read -p '     Please select exploit: ' opts
-if [[ $opts -eq 3 ]] 
-then
-clear
-logo
+# nmap scanner
+main_nmap_vuln_scanner(){
+rm -f "$defdir/$nmap_path_all" >/dev/null 2>&1
+rm -f "$defdir/$nmaptocsv_result" >/dev/null 2>&1
 echo
 echo -e "$red"'     ************************* '"$yellow"'Nmap Vuln Scanner'"$red"' **********************'
 echo
@@ -841,17 +873,55 @@ echo ""
 echo -e "$yellow" "     Invalid IP/IP Range" 
 exit 1
 fi
-
 echo
 echo -e "$red"'            #######################################################'
 echo -e "$red"'            ###' "$yellow"'               Starting Scan . . .             '"$red"  '###'
 echo -e "$red"'            #######################################################'
 echo -e "$white"
-nmap -oN $defdir/$nmap_path_all -T4 -v -Pn --script vuln $iptarget
+nmap -oN $defdir/$nmap_path_all -T4 -v -Pn --open --max-hostgroup 3 --script vuln $iptarget
 echo
-echo -e "$yellow""     Nmap MS17-010 result saved to $defdir/$nmap_path_all"
+nmaptocsv -i $defdir/$nmap_path_all -f ip-fqdn-port-protocol-service-version-os-script -o $defdir/$nmaptocsv_result >/dev/null 2>&1 
+echo -e "$yellow""     Nmap result saved to $defdir/$nmaptocsv_result"
 echo
 echo
+}
+nmap_vuln_scanner(){
+check_nmaptocsv
+if [ -e /usr/share/nmap/scripts/broadcast-avahi-dos.nse ]
+then
+mv /usr/share/nmap/scripts/broadcast-avahi-dos.nse /usr/share/nmap/broadcast-avahi-dos.nse
+main_nmap_vuln_scanner
+mv /usr/share/nmap/broadcast-avahi-dos.nse /usr/share/nmap/scripts/broadcast-avahi-dos.nse
+else
+main_nmap_vuln_scanner
+mv /usr/share/nmap/broadcast-avahi-dos.nse /usr/share/nmap/scripts/broadcast-avahi-dos.nse
+fi
+}
+
+
+main(){
+if [ -e $dir/eternalblue_doublepulsar.rb ] && [ -d $dir/deps/ ]
+then
+checkdep
+logo
+echo
+echo -e "$red"'            **********************'"$yellow"' Exploits '"$red"'***********************'
+echo
+echo
+echo -e '     '"$red"'['"$yellow"'1'"$red"']'"$green"' MS17-010 Exploit'
+echo -e '     '"$red"'['"$yellow"'2'"$red"']'"$green"' Samba Exploit'
+echo -e '     '"$red"'['"$yellow"'3'"$red"']'"$green"' Nmap Vuln Scanner'
+echo
+echo -e '     '"$red"'['"$yellow"'9'"$red"']'"$yellow"' Check Updates'
+echo -e '     '"$red"'['"$yellow"'0'"$red"']'"$red"' Exit'
+echo
+echo -e "$green"
+read -p '     Please select exploit: ' opts
+if [[ $opts -eq 3 ]] 
+then
+clear
+logo
+nmap_vuln_scanner
 EternalXploit
 elif [[ $opts -eq 9 ]] 
 then
@@ -895,6 +965,8 @@ elif [[ $exploit -eq 4 ]]
 then
 clear
 logo
+rm -f "$defdir/$nmap_path" >/dev/null 2>&1
+rm -f "$defdir/$nmaptocsv_result_ms17_010" >/dev/null 2>&1
 echo
 echo -e "$red"'     ************************* '"$yellow"'Nmap MS17-010 Scanner'"$red"' **********************'
 echo
@@ -927,7 +999,8 @@ echo -e "$red"'            #####################################################
 echo -e "$white"
 nmap -oN $defdir/$nmap_path -T4 -v -Pn -p445 --open --max-hostgroup 3 --script smb-vuln-ms17-010 $iptarget >/dev/null 2>&1 
 echo
-echo -e "$yellow""     Nmap MS17-010 result saved to $defdir/$nmap_path"
+nmaptocsv -i $defdir/$nmap_path -f ip-fqdn-port-protocol-service-version-os-script -o $defdir/$nmaptocsv_result_ms17_010 >/dev/null 2>&1 
+echo -e "$yellow""     Nmap MS17-010 result saved to $defdir/$nmaptocsv_result_ms17_010"
 echo
 echo
 EternalXploit
